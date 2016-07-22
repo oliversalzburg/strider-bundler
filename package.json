@@ -23,6 +23,7 @@
   "author": "Oliver Salzburg <oliver.salzburg@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "bluebird": "^3.4.1",
     "debug": "^2.2.0"
   },
   "strider": {
