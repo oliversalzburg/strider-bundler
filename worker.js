@@ -30,7 +30,7 @@ class BundlerPhaseWorker {
   constructor(config, job) {
     debug('Constructing phase worker for strider-bundler…');
 
-    this.config = config;
+    this.config = config || {};
     this.job = job;
 
     // Example: Setting an environment variable
@@ -49,9 +49,33 @@ class BundlerPhaseWorker {
 
     const contextCmd = Promise.promisify(context.cmd);
 
+    const args = [];
+    // Create an archive
+    args.push('--create');
+    // Set verbose as requested.
+    if (this.config.verbose) {
+      args.push('--verbose');
+    }
+    // Compress it
+    args.push('--gzip');
+    // If a directory was given, archive that (otherwise cwd)
+    if (this.config.bundleDirectory) {
+      args.push(`--directory=${this.config.bundleDirectory}`);
+    }
+    // Set the output filename
+    args.push('--file=package.tgz');
+
+    if (this.config.exclude && this.config.exclude.length) {
+      this.config.exclude.forEach(exclude => {
+        args.push(`--exclude=${exclude}`);
+      });
+    }
+
+    args.push('.');
+
     return contextCmd({
       command: 'tar',
-      args: ['--create', '--verbose', '--gzip', `--directory=${this.config.bundleDirectory}`, '--file=package.tgz', '.']
+      args: args
     })
       .then(() => {
         context.comment('Bundle created as package.tgz.');

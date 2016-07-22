@@ -10,33 +10,96 @@ chai.use(sinonChai);
 const bundlerInit = require('../worker.js');
 
 describe('bundler', () => {
-  let bundler;
+  describe('with directory', () => {
+    let bundler;
 
-  beforeEach(() => {
-    const config = {
-      bundleDirectory: 'dist'
-    };
-    const job = {};
-    return bundlerInit.initAsync(config, job)
-      .then(result => bundler = result);
+    before(() => {
+      const config = {
+        bundleDirectory: 'dist'
+      };
+      const job = {};
+      return bundlerInit.initAsync(config, job)
+        .then(result => bundler = result);
+    });
+
+    it('should run the expected tar command', () => {
+      let contextCmd = sinon.stub();
+      contextCmd.onFirstCall().callsArg(1);
+
+      const context = {
+        comment: Function.prototype,
+        cmd: contextCmd
+      };
+
+      return bundler.deployAsync(context)
+        .then(() => {
+          expect(contextCmd).to.have.been.calledWithMatch({
+            command: 'tar',
+            args: ['--create', '--gzip', '--directory=dist', '--file=package.tgz', '.']
+          });
+        });
+    });
   });
 
-  it('should run tar', () => {
-    let contextCmd = sinon.stub();
-    contextCmd.onFirstCall().callsArg(1);
+  describe('with verbose', () => {
+    let bundler;
 
-    const context = {
-      comment: Function.prototype,
-      cmd: contextCmd
-    };
+    before(() => {
+      const config = {
+        verbose: true
+      };
+      const job = {};
+      return bundlerInit.initAsync(config, job)
+        .then(result => bundler = result);
+    });
 
-    return bundler.deployAsync(context)
-      .then(() => {
-        expect(contextCmd).to.have.been.calledWithMatch({
-          command: 'tar',
-          args: ['--create', '--verbose', '--gzip', '--directory=dist', '--file=package.tgz', '.']
+    it('should run the expected tar command', () => {
+      let contextCmd = sinon.stub();
+      contextCmd.onFirstCall().callsArg(1);
+
+      const context = {
+        comment: Function.prototype,
+        cmd: contextCmd
+      };
+
+      return bundler.deployAsync(context)
+        .then(() => {
+          expect(contextCmd).to.have.been.calledWithMatch({
+            command: 'tar',
+            args: ['--create', '--verbose', '--gzip', '--file=package.tgz', '.']
+          });
         });
-      });
+    });
+  });
 
+  describe('with exclude', () => {
+    let bundler;
+
+    before(() => {
+      const config = {
+        exclude: ['foo']
+      };
+      const job = {};
+      return bundlerInit.initAsync(config, job)
+        .then(result => bundler = result);
+    });
+
+    it('should run the expected tar command', () => {
+      let contextCmd = sinon.stub();
+      contextCmd.onFirstCall().callsArg(1);
+
+      const context = {
+        comment: Function.prototype,
+        cmd: contextCmd
+      };
+
+      return bundler.deployAsync(context)
+        .then(() => {
+          expect(contextCmd).to.have.been.calledWithMatch({
+            command: 'tar',
+            args: ['--create', '--gzip', '--file=package.tgz', '--exclude=foo', '.']
+          });
+        });
+    });
   });
 });
