@@ -23,7 +23,8 @@
   "author": "Oliver Salzburg <oliver.salzburg@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "debug": "^2.2.0"
+    "debug": "^2.2.0",
+    "lodash": "^4.13.1"
   },
   "strider": {
     "type": "job",
