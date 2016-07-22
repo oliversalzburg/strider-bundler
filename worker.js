@@ -60,8 +60,8 @@ class BundlerPhaseWorker {
 }
 
 class BundlerInit {
-  init(config, job, context) {
-    debug('Initiliazing strider-bundler…');
+  init(config, job) {
+    debug('Initializing strider-bundler…');
     return Promise.resolve(toStriderProxy(new BundlerPhaseWorker(config, job)));
   }
 }
