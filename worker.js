@@ -2,7 +2,6 @@
 
 const Promise = require('bluebird');
 
-const _ = require('lodash');
 const debug = require('debug')('strider-bundler:worker');
 
 function toStriderProxy(instance) {
@@ -19,6 +18,9 @@ function toStriderProxy(instance) {
         .then(result => done(null, result))
         .catch(error => done(error));
     };
+    Object.defineProperty(instance[functionInInstance], 'length', {
+      value: instance[`${functionInInstance}Async`].length
+    });
   });
 
   return instance;
@@ -42,8 +44,18 @@ class BundlerPhaseWorker {
 
   // Run this function in the deploy phase.
   deploy(context) {
-    debugger;
-    return Promise.resolve();
+    debug('Starting bundling process…');
+    context.comment('Starting bundling process…');
+
+    const contextCmd = Promise.promisify(context.cmd);
+
+    return contextCmd({
+      command: 'tar',
+      args: ['--create', '--verbose', '--gzip', `--directory=${this.config.bundleDirectory}`, '--file=package.tgz', '.']
+    })
+      .then(() => {
+        context.comment('Bundle created as package.tgz.');
+      });
   }
 }
 

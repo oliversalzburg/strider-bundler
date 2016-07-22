@@ -5,11 +5,14 @@ const debug = require('debug')('strider-bundler:webapp');
 module.exports = {
   // mongoose schema, if you need project-specific config
   config: {
+    bundleDirectory:{type:String}
+    /*
     environment: {type: String, default: 'Hi from `environment`'},
     prepare: {type: String, default: 'Hi from `prepare`'},
     test: {type: String, default: 'Hi from `test`'},
     deploy: {type: String, default: 'Hi from `deploy`'},
     cleanup: {type: String, default: 'Hi from `cleanup`'}
+    */
   },
   // Define project-specific routes
   //   all routes created here are namespaced within /:org/:repo/api/:pluginid
