@@ -1,6 +1,6 @@
 'use strict';
 
-const debug = require('debug')('strider-template:worker');
+const debug = require('debug')('strider-bundler:worker');
 
 /* Functions for demonstration purposes only */
 function checkSomething(context, callback) {

@@ -1,6 +1,6 @@
 'use strict';
 
-const debug = require('debug')('strider-template:webapp');
+const debug = require('debug')('strider-bundler:webapp');
 
 module.exports = {
   // mongoose schema, if you need project-specific config

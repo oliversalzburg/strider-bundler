@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/strider-template.iml" filepath="$PROJECT_DIR$/.idea/strider-template.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/strider-bundler.iml" filepath="$PROJECT_DIR$/.idea/strider-bundler.iml" />
     </modules>
   </component>
 </project>

@@ -40,7 +40,7 @@ describe('template worker test example', function () {
   beforeEach(function (done) {
     exitCode = 0;
     job = {
-      project: {name: 'strider-template'},
+      project: {name: 'strider-bundler'},
       ref: {branch: 'master'},
       _id: '123',
       trigger: {

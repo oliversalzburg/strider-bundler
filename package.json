@@ -1,7 +1,8 @@
 {
-  "name": "strider-template",
-  "version": "2.0.0",
-  "description": "Plugin template for Strider CD",
+  "name": "strider-bundler",
+  "version": "1.0.0",
+  "description": "Packages files in the build workspace",
+  "homepage": "https://github.com/oliversalzburg/strider-bundler",
   "main": "webapp.js",
   "scripts": {
     "lint": "eslint *.js config lib",
@@ -9,28 +10,28 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bitwit/strider-template.git"
+    "url": "https://github.com/oliversalzburg/strider-bundler.git"
   },
   "keywords": [
     "strider",
     "plugin",
     "template"
   ],
-  "author": "Strider Continuous Deployment <hello@stridercd.com>",
+  "engines": {
+    "node": ">=4.2"
+  },
+  "author": "Oliver Salzburg <oliver.salzburg@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "debug": "^2.2.0"
   },
   "strider": {
     "type": "job",
-    "id": "template",
-    "title": "Plugin Template",
+    "id": "bundler",
+    "title": "Bundler",
     "worker": "worker.js",
     "webapp": "webapp.js",
-    "icon": "icon.png",
-    "config": {
-      "controller": "TemplateController"
-    }
+    "icon": "icon.png"
   },
   "devDependencies": {
     "chai": "^3.5.0",
