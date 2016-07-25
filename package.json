@@ -1,6 +1,6 @@
 {
   "name": "strider-bundler",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Packages files in the build workspace",
   "homepage": "https://github.com/oliversalzburg/strider-bundler",
   "main": "webapp.js",
