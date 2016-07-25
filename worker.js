@@ -12,17 +12,9 @@ class BundlerPhaseWorker {
 
     this.config = config || {};
     this.job = job;
-
-    // Example: Setting an environment variable
-    this.env = {
-      'BUNDLER_ACTIVE': true
-    };
-
-    // Example: Static command definition for a phase
-    this.environment = 'echo This job will be processed by strider-bundler';
   }
 
-  // Run this function in the deploy phase.
+  //noinspection JSUnusedGlobalSymbols
   deploy(context) {
     debug('Starting bundling process…');
     context.comment('Starting bundling process…');
