@@ -68,7 +68,7 @@ class BundlerInit {
   init(config, job) {
     debug('Initializing strider-bundler…');
 
-    if (!config.source) {
+    if (!config.bundleDirectory) {
       throw new ExtensionConfigurationError('bundleDirectory', 'The configuration is expected to contain a \'bundleDirectory\' member that contains the path which should be bundled.');
     }
     if (config.exclude && !Array.isArray(config.exclude)) {

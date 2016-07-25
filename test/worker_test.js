@@ -46,6 +46,7 @@ describe('bundler', () => {
 
     before(() => {
       const config = {
+        bundleDirectory: 'dist',
         verbose: true
       };
       const job = {};
@@ -66,7 +67,7 @@ describe('bundler', () => {
         .then(() => {
           expect(contextCmd).to.have.been.calledWithMatch({
             command: 'tar',
-            args: ['--create', '--verbose', '--gzip', '--file=package.tgz', '.']
+            args: ['--create', '--verbose', '--gzip', '--directory=dist', '--file=package.tgz', '.']
           });
         });
     });
@@ -77,6 +78,7 @@ describe('bundler', () => {
 
     before(() => {
       const config = {
+        bundleDirectory: 'dist',
         exclude: ['foo']
       };
       const job = {};
@@ -97,7 +99,7 @@ describe('bundler', () => {
         .then(() => {
           expect(contextCmd).to.have.been.calledWithMatch({
             command: 'tar',
-            args: ['--create', '--gzip', '--file=package.tgz', '--exclude=foo', '.']
+            args: ['--create', '--gzip', '--directory=dist', '--file=package.tgz', '--exclude=foo', '.']
           });
         });
     });
