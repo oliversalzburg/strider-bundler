@@ -3,28 +3,8 @@
 const Promise = require('bluebird');
 
 const debug = require('debug')('strider-bundler:worker');
-
-function toStriderProxy(instance) {
-  const functionsInInstance = Object.getOwnPropertyNames(Object.getPrototypeOf(instance)).filter(propertyName => {
-    return typeof instance[propertyName] === 'function' && propertyName !== 'constructor';
-  });
-
-  functionsInInstance.forEach(functionInInstance => {
-    instance[`${functionInInstance}Async`] = instance[functionInInstance];
-    instance[functionInInstance] = function () {
-      const args = Array.from(arguments);
-      const done = args.pop();
-      return instance[`${functionInInstance}Async`].apply(instance, args)
-        .then(result => done(null, result))
-        .catch(error => done(error));
-    };
-    Object.defineProperty(instance[functionInInstance], 'length', {
-      value: instance[`${functionInInstance}Async`].length
-    });
-  });
-
-  return instance;
-}
+const ExtensionConfigurationError = require('strider-modern-extensions').errors.ExtensionConfigurationError;
+const toStriderProxy = require('strider-modern-extensions').toStriderProxy;
 
 class BundlerPhaseWorker {
   constructor(config, job) {
@@ -84,8 +64,17 @@ class BundlerPhaseWorker {
 }
 
 class BundlerInit {
+  //noinspection JSUnusedGlobalSymbols
   init(config, job) {
     debug('Initializing strider-bundler…');
+
+    if (!config.source) {
+      throw new ExtensionConfigurationError('bundleDirectory', 'The configuration is expected to contain a \'bundleDirectory\' member that contains the path which should be bundled.');
+    }
+    if (config.exclude && !Array.isArray(config.exclude)) {
+      throw new ExtensionConfigurationError('exclude', 'The configuration member \'exclude\' is expected to contain an array of strings..');
+    }
+
     return Promise.resolve(toStriderProxy(new BundlerPhaseWorker(config, job)));
   }
 }
