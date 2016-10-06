@@ -15,7 +15,9 @@ describe('bundler', () => {
 
     before(() => {
       const config = {
-        bundleDirectory: 'dist'
+        bundleDirectory: 'dist',
+        filename: 'package.tgz',
+        source: '.'
       };
       const job = {};
       return bundlerInit.initAsync(config, job)
@@ -47,7 +49,9 @@ describe('bundler', () => {
     before(() => {
       const config = {
         bundleDirectory: 'dist',
-        verbose: true
+        verbose: true,
+        filename: 'package.tgz',
+        source: '.'
       };
       const job = {};
       return bundlerInit.initAsync(config, job)
@@ -79,6 +83,8 @@ describe('bundler', () => {
     before(() => {
       const config = {
         bundleDirectory: 'dist',
+        filename: 'package.tgz',
+        source: '.',
         exclude: ['foo']
       };
       const job = {};

@@ -35,7 +35,7 @@ class BundlerPhaseWorker {
       args.push(`--directory=${this.config.bundleDirectory}`);
     }
     // Set the output filename
-    args.push('--file=package.tgz');
+    args.push(`--file=${this.config.filename}`);
 
     if (this.config.exclude && this.config.exclude.length) {
       this.config.exclude.forEach(exclude => {
@@ -43,14 +43,14 @@ class BundlerPhaseWorker {
       });
     }
 
-    args.push('.');
+    args.push(this.config.source);
 
     return contextCmd({
       command: 'tar',
       args: args
     })
       .then(() => {
-        context.comment('Bundle created as package.tgz.');
+        context.comment(`Bundle created as '${this.config.filename}'`);
       });
   }
 }
